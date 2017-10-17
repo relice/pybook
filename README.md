@@ -13,11 +13,10 @@
   - [5.1新手需掌握技能点](#5.1)
   - [5.2老鸟需掌握技能点](#5.2)
 
-* [TODO](#1)
-* [TODO](#1)
+* [TODO爬虫](#1)
 
 
----------------
+ - - - - - - - - - - - - - - -
 
 ##Python后端面试题
 <h3 id="1">1.语言</h3>
@@ -26,7 +25,7 @@ Python面试,基础相关问题少不了.
 
 * [python高并发解决方案](http://www.jianshu.com/p/3aaf8f0984a2)
   - 提示:
- 我希望听到twisted->tornado->gevent
+ 我希望听到twisted ->tornado ->gevent
  
   - 答案:
 **gevent**
@@ -79,10 +78,10 @@ logging是Python标准库里的日志模块(线程安全)
 可以直接认为是linux,毕竟搞后端的多数是和linux打交道.
 
 * [tcp/udp的区别?tcp粘包有了解吗?](http://blog.csdn.net/yannanxiu/article/details/52096465)
- - 提示:
+  - 提示:
  我希望听到TCP粘包与分包,为什么会有这种情况,应该如何解决.能讲到UDP是否会有同样情况发生更好.
 
- - 答案:
+  - 答案:
 **tcp/udp的区别**
 TCP与UDP区别总结：
 1.TCP面向连接（如打电话要先拨号建立连接）;UDP是无连接的,即发送数据之前不需要建立连接
@@ -102,13 +101,13 @@ TCP是以段（Segment）为单位发送数据的,建立TCP链接后,有一个�
 **如何处理**
 在进行TCP Socket开发时,都需要处理数据包粘包和分包的情况.使用的语言是Python.实际上解决该问题很简单,在应用层下,定义一个协议：**消息头部+消息长度+消息正文即可.**
 
-* [TIME_WAIT,CLOSE_WAIT,ESTABLISHED是什么?出现过多的CLOSE_WAIT可能是什么原因?](http://itindex.net/detail/50213-%E6%9C%8D%E5%8A%A1%E5%99%A8-time_wait-close_wait)
- - 提示:
+* [TIME_WAIT,CLOSE_WAIT,ESTABLISHED是什么?出现过多的CLOSE_WAIT可能是什么原因?](http://itindex.net/detail/50213 -%E6%9C%8D%E5%8A%A1%E5%99%A8 -time_wait -close_wait)
+  - 提示:
 考验你对实际开发中遇到的常见问题,处理方式
 
- - 答案:
+  - 答案:
 **使用netstat和awk命令来统计网络连接数**
-`netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`
+`netstat  -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`
 TIME_WAIT：表示主动关闭,通过优化系统内核参数可容易解决.
 CLOSE_WAIT：表示被动关闭,需要从程序本身出发.
 ESTABLISHED：表示正在通信
@@ -116,10 +115,10 @@ ESTABLISHED：表示正在通信
 出现大量close_wait的现象,主要原因是某种情况下对方关闭了socket链接,但是我方忙与读或者写,没有关闭连接.代码需要判断socket,一旦读到0,断开连接,read返回负,检查一下errno,如果不是AGAIN,就断开连接.
 
 * [epoll,select的区别？边缘触发,水平触发区别？](http://www.cnblogs.com/Anker/p/3265058.html)
- - 提示:
+  - 提示:
 考验在linux开发中,服务器端处理请求的选择问题
 
- - 答案:
+  - 答案:
 select和epoll这两个机制都I/O复用的解决方案,select为POSIX标准中的,而epoll为Linux所特有.
 [更多查看](https://www.zhihu.com/question/20114168)
 
@@ -130,10 +129,10 @@ select和epoll这两个机制都I/O复用的解决方案,select为POSIX标准中
 <h4 id="3.1">3.1mysql相关</h4>
 
 * [了解mysql字符集和排序规则吗？](https://www.2cto.com/database/201310/250548.html)
- - 提示:
+  - 提示:
  在服务器建表时字符集(Character Set)和排序规则(Collation)是必不可少的,对他了解多少,如何选择.
 
- - 答案:
+  - 答案:
 **字符集**
 所谓字符集,就是用来定义字符在数据库中的编码的集合.常见的字符集有：utf8（支持中文）和ascii（不支持中文）
 **排序规则**
@@ -147,21 +146,21 @@ select和epoll这两个机制都I/O复用的解决方案,select为POSIX标准中
 因此`gbk_chinese_ci`排序方式就表示：字符集为gbk,人类语言使用中文来比较大小,比较时区分大小写.
 
 * [varchar与char的区别是什么？大小限制？utf8字符集下varchar最多能存多少个字符?](http://www.cnblogs.com/zejin2008/p/6020030.html)
- - 提示:
+  - 提示:
 char与varchar这两个字符类型在mysql中经常遇见,正确的使用,可以提高效率与避免空间上的浪费.
 
- - 答案:
+  - 答案:
 **存数据时的区别**
-char定义的是固定长度,长度范围为0-255,存储时,如果字符数没有达到定义的位数,会在后面用空格补全存入数据库中,在上例中,name实际存储在数据中的数据为'zejin '
-varchar是变长长度,长度范围为0-65535,存储时,如果字符没有达到定义的位数,也不会在后面补空格,在上例subject字段中,实际存储在数据中的数据为'zejin ',当然还有一或两个字节来描述该字节长度
+char定义的是固定长度,长度范围为0 -255,存储时,如果字符数没有达到定义的位数,会在后面用空格补全存入数据库中,在上例中,name实际存储在数据中的数据为'zejin '
+varchar是变长长度,长度范围为0 -65535,存储时,如果字符没有达到定义的位数,也不会在后面补空格,在上例subject字段中,实际存储在数据中的数据为'zejin ',当然还有一或两个字节来描述该字节长度
 **取数据时的区别**
 数据库取char的数据时,会把后面的空格全部丢弃掉,也就是说,在char中的尾部存入空格时,最后取出来都会被丢弃.而数据库在取varchar数据时,尾部空格会保留.
 
 * [primary key和unique key的区别？](http://blog.csdn.net/zm2714/article/details/8482625)
- - 提示:
+  - 提示:
 `primary key = unique + not null`
  
- - 答案:
+  - 答案:
 Primary key与Unique Key都是唯一性约束.但二者有很大的区别：
 **unique Key**
 1.唯一键,一个表只能有一个PRIMARY KEY.
@@ -171,10 +170,10 @@ Primary key与Unique Key都是唯一性约束.但二者有很大的区别：
 2.UNIQUE KEY 对列没有NOT NULL或NULL的特殊要求.
 
 * [外键有什么用,是否该用外键？外键一定需要索引吗？](http://blog.csdn.net/u010695055/article/details/53169472) 
- - 提示:
+  - 提示:
  主要考你对表的设计与优化.可以通过使用外键的优缺点来分析该问题.
  
- - 答案:
+  - 答案:
 **外键是什么**
 程序很难100％保证数据的完整性,而用外键即使在数据库服务器down机或者出现其他问题的时候,也能够最大限度的保证数据的一致性和完整性.
 **是否该用外键**
@@ -183,10 +182,10 @@ Primary key与Unique Key都是唯一性约束.但二者有很大的区别：
 加入外键的主要问题就是影响性能,因此加入索引能加快关联查询的速度.
 
 * [myisam与innodb的区别与选择？](https://www.zhihu.com/question/20596402)
- - 提示:
+  - 提示:
 希望看到你通过对两者区别和针对公司的业务类型来选择合适的表类型,这样才能发挥mysql的性能优势.
  
- - 答案:
+  - 答案:
 myisam与innodb是mysql的储引擎.
 **区别**
 1.InnoDB支持事务,MyISAM不支持,对于InnoDB每一条SQL语言都默认封装成事务,自动提交,这样会影响速度,所以最好把多条SQL语言放在begin和commit之间,组成一个事务； 
@@ -204,10 +203,10 @@ myisam与innodb是mysql的储引擎.
 写操作多用InnoDB
  
 * [索引有什么用,大致原理是什么？设计索引有什么注意点？](http://blog.csdn.net/iefreer/article/details/15815455)
- - 提示:
+  - 提示:
 鉴于创建索引需要额外的磁盘空间（,以及太多的索引会导致文件系统大小限制所产生的问题,所以对哪些字段建立索引,什么情况下使用索引,需要审慎考虑.
 
- - 答案:
+  - 答案:
 **索引作用**
 MySQL索引在MySQL数据库中,可以有效提高查询的效率,尤其是查询数据量非常大时,效果更为明显,往往能使查询速度加快成千上万倍.
 **索引原理**
@@ -218,10 +217,10 @@ MySQL索引主要有一下几种索引类型:FULLTEXT,HASH,BTREE,RTREE,对不通
 <h4 id="3.2">3.2redis相关</h4>
 
 * [什么场景用redis,为什么mysql不适合？](http://blog.jobbole.com/88383/) 
- - 提示:
+  - 提示:
  不同需求不同场景有着不同选择,一般可以redis+mysql联用,如果可以涉及memcache,mongoDB这些no sql系列加分.
  
- - 答案:
+  - 答案:
 **redis场景**
 1.会话缓存（Session Cache）
 用Redis缓存会话比其他存储（如Memcached）的优势在于：Redis提供持久化.
@@ -238,10 +237,10 @@ Redis作为队列使用的操作,就类似于本地程序语言（如Python）�
 推理到redis+mysql,它是内存+磁盘关系的一个映射,mysql放在磁盘,redis放在内存,这样的话,web应用每次只访问redis,如果没有找到的数据,才去访问Mysql.
 
 * [谈谈redis的事务？可以处理分布式事务吗？怎么解决?](https://www.zhihu.com/question/35949129)
- - 提示:
+  - 提示:
 redis本身不处理分布式事物或者说它的事物非常弱,因为redis本身是单线程的.
 
- - 答案:
+  - 答案:
 通过Redis+Lua方案,Redis的事务对处理较复杂的业务需求非常有用.
 其次,Redis中实现事务有2种方式:
 1.使用MULIT,EXEC,DISCARD和WATCH等命令;
@@ -249,10 +248,10 @@ redis本身不处理分布式事物或者说它的事物非常弱,因为redis本
 3.DISCARD指令就是用来回滚的.
 
 * [redis内存满了会怎么样？](http://blog.csdn.net/liqfyiyi/article/details/50894004)
- - 提示:
-需要你描述解决该问题的过程(起因-分析-排查-解决) 
+  - 提示:
+需要你描述解决该问题的过程(起因 -分析 -排查 -解决) 
  
- - 答案:
+  - 答案:
 当内存满了,不允许再存数据,会出现错误`OOM command not allowed when used memory > ‘maxmemory’`
  
 <h3 id="4">4.安全</h3>
@@ -262,10 +261,10 @@ Web安全与我们平时开发处处关联,那么web开发需要在工作中注�
 <h4 id="4.1">4.1安全</h4>
 
 * [sql注入是怎么产生的,如何防止](http://blog.csdn.net/qq_29920751/article/details/51661257)  
- - 提示:
+  - 提示:
  对于一个有经验的开发人员,代码的书写规范是门必修课,这里考的就是程序员对书写sql语句中是否注意书写规范.
 
- - 答案:
+  - 答案:
 sql不禁是Python中需要防范的问题,在其他语言也是个必不可少的问题,这里引用PHP的防注入方案.
 1.过滤掉一些常见的数据库操作关键字:select,insert,update,delete,and,*等.或者通过系统函数:addslashes(需要被过滤的内容)来进行过滤.
 2.SQL语句书写的时候尽量不要省略小引号(tab键上面那个)和单引号.
@@ -275,10 +274,10 @@ sql不禁是Python中需要防范的问题,在其他语言也是个必不可少�
 关闭错误提示信息,将错误信息写到系统日志.
 6.使用Mysqli和PDO连接mysql数据预处理.
 
-* [xss是什么,如何预防？](http://blog.csdn.net/u011300968/article/details/75352519)  - 提示:
+* [xss是什么,如何预防？](http://blog.csdn.net/u011300968/article/details/75352519)   - 提示:
 利用django/flask都是可以防止xss攻击的.
  
- - 答案:
+  - 答案:
 **什么是XSS攻击**
 XSS即跨站脚本攻击,XSS是一种经常出现在web应用中的计算机安全漏洞,它允许恶意web用户将代码植入到提供给其它用户使用的页面中.简单的说就是HTML注入问题.
 **防止XSS攻击的两种方式**
@@ -286,9 +285,9 @@ XSS即跨站脚本攻击,XSS是一种经常出现在web应用中的计算机安�
 2.利用django的HTML自动转义,无需autoescape 标签,django中的HTML文档会自动转义.
 
 * [csrf是什么？如何防范的？](http://www.cnblogs.com/wumingxiaoyao/p/6478419.html)
- - 提示:
+  - 提示:
  用 django 有多久,跟 csrf 这个概念打交道就有久.
- - 答案:
+  - 答案:
 **csrf是什么**
 CSRF,跨站点伪造请求.顾名思义,就是是伪造请求,冒充用户在站内的正常操作.
 **通过Django来防范CSRF**
@@ -301,20 +300,20 @@ CSRF,跨站点伪造请求.顾名思义,就是是伪造请求,冒充用户在站
 <h4 id="4.2">4.2密码技术</h4>
 
 * 简单说说https的工作原理与http的区别？
- - 提示:
+  - 提示:
 希望可以讲到里面使用了哪些加密算法 
 
- - 答案:
+  - 答案:
 Https是一种基于SSL/TLS的Http协议,所有的http数据都是在SSL/TLS协议封装之上传输的.
 Https协议在Http协议的基础上,添加了SSL/TLS握手以及数据加密传输,也属于应用层协议.
 1.HTTP协议运行在TCP之上,所有传输的内容都是明文,客户端和服务器端都无法验证对方的身份.
 2.HTTPS是运行在SSL/TLS之上的HTTP协议,SSL/TLS运行在TCP之上.所有传输的内容都经过加密,加密采用对称加密,但对称加密的密钥用服务器方的证书进行了非对称加密.
 
 * 说说https有什么优缺点?
- - 提示:
+  - 提示:
 从安全与性能方向回答.
  
- - 答案:
+  - 答案:
 **优点**
 1.使用 HTTPS 协议可认证用户和服务器,确保数据发送到正确的客户机和服务器; 
 2.HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输.身份认证的网络协议, 要比 http 协议安全,可防止数据在传输过程中不被窃取.改变,确保数据的完整性. 
@@ -326,10 +325,10 @@ Https协议在Http协议的基础上,添加了SSL/TLS握手以及数据加密传
 5.HTTPS 连接缓存不如 HTTP 高效. 
  
 * [对称加密与非对称加密区别？](http://blog.csdn.net/relicemxd/article/details/52399627)
- - 提示:
+  - 提示:
 对称加密高效不安全,非对称加密安全不高效.
 
- - 答案:
+  - 答案:
 **对称加密**
 对称加密是指加密和解密使用的密钥是同一个密钥,或者可以相互推算. 对称加密的优点是算法简单,加解密效率高,系统开销小,适合对大数据量加密. 缺点是解密加密使用同一个密钥,需要考虑远程通信的情况下如何安全的交换密钥,如果密钥丢失, 所谓的加密解密就失效了.
 **非对称加密**
@@ -341,22 +340,22 @@ Https协议在Http协议的基础上,添加了SSL/TLS握手以及数据加密传
 
 <h4 id="5.1">5.1新手需掌握技能点</h4>
 
-- 谈谈装饰器,迭代器,yield,内存管理等
-- 计算密集型,IO密集型任务怎么办
-- Tcp/Udp协议,Http协议
-- sql,cache, nosql
-- web安全相关,sql注入,xss等
+ - 谈谈装饰器,迭代器,yield,内存管理等
+ - 计算密集型,IO密集型任务怎么办
+ - Tcp/Udp协议,Http协议
+ - sql,cache, nosql
+ - web安全相关,sql注入,xss等
 
 <h4 id="5.2">5.2老鸟需掌握技能点</h4>
 
-- WSGI 和 FastCGI 的关系
-- Gevent 和 threading / multiprocessing 的关系
-- cookie 和 session 的关系,以及 xsrf 的攻击和防范方法
-- Django 和 Tornado 的关系.差别
-- 考考数据库知识,SQL 语法和调优,SQLAlchemy ,redis的用法
-- restfull 风格的api怎么写
+ - WSGI 和 FastCGI 的关系
+ - Gevent 和 threading / multiprocessing 的关系
+ - cookie 和 session 的关系,以及 xsrf 的攻击和防范方法
+ - Django 和 Tornado 的关系.差别
+ - 考考数据库知识,SQL 语法和调优,SQLAlchemy ,redis的用法
+ - restfull 风格的api怎么写
 
---------------
+ - - - - - - - - - - - - - -
 
 ##Python爬虫面试题
 ### 爬虫
